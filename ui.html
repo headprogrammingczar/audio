@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="ui.css"></link>
+<script src="controls.js"></script>
+<script src="audio.js"></script>
+</head>
+<body>
+<table id="mockup">
+  <tr>
+    <td>
+      <div id="dial" class="dial"></div>
+    </td>
+    <td>
+      <div id="port">
+        <div class="base">
+          <div class="rise">
+            <div class="hole">
+              <div class="pin">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div id="switch" style="--value: 0">
+      </div>
+    </td>
+    <td>
+      <div id="selectlever">
+      </div>
+    </td>
+    <td>
+      <div id="button">
+      </div>
+    </td>
+    <td>
+      <div id="key">
+      </div>
+    </td>
+    <td>
+      <div id="waveform">
+      </div>
+    </td>
+    <td>
+      <div id="bars">
+      </div>
+    </td>
+    <td>
+      <div id="slider">
+      </div>
+    </td>
+    <td>
+      <div id="speaker">
+      </div>
+    </td>
+    <td>
+      <div id="nixie">
+      </div>
+    </td>
+    <td>
+      <div id="voltmeter">
+      </div>
+    </td>
+    <td>
+      <div id="led">
+      </div>
+    </td>
+    <td>
+      <div id="light">
+      </div>
+    </td>
+  </tr>
+</table>
+<script>
+dial = new AngleControl(30, document.querySelector('#dial'), true, [30, 60, 90, 120, 150], angle => (angle - 30) / 30);
+</script>
+</body>
+</head>
+</html>

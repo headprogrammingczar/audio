@@ -1,0 +1,60 @@
+.base {
+  /* colors */
+  --plastic-color: rgba(30, 30, 30, 1);
+  --metal-base-color: rgba(230, 232, 235, 1);
+  --metal-lightgray-color: rgba(200, 200, 200, 1);
+  --metal-darkgray-color: rgba(150, 150, 150, 1);
+  --metal-highlight-color: rgba(255, 255, 240, 1);
+  --metal-gold: rgba(240, 200, 40, 1);
+
+  /* a good looking metal gradient for large elements */
+  --metal-gradient-1: conic-gradient(
+    var(--metal-base-color) 0deg,
+    var(--metal-highlight-color) 15deg,
+    var(--metal-darkgray-color) 30deg,
+    var(--metal-lightgray-color) 60deg,
+    var(--metal-lightgray-color) 65deg,
+    var(--metal-base-color) 70deg,
+    var(--metal-highlight-color) 90deg,
+    var(--metal-lightgray-color) 105deg,
+    var(--metal-base-color) 120deg,
+    var(--metal-darkgray-color) 135deg,
+    var(--metal-darkgray-color) 210deg,
+    var(--metal-base-color) 235deg,
+    var(--metal-highlight-color) 250deg,
+    var(--metal-lightgray-color) 270deg,
+    var(--metal-highlight-color) 285deg,
+    var(--metal-base-color) 300deg,
+    var(--metal-lightgray-color) 330deg,
+    var(--metal-base-color) 360deg
+  );
+  /* metal gradient that is simpler and symmetrical */
+  --metal-gradient-2: conic-gradient(
+    var(--metal-darkgray-color) 0deg,
+    var(--metal-lightgray-color) 15deg,
+    var(--metal-darkgray-color) 30deg,
+    var(--metal-darkgray-color) 50deg,
+    var(--metal-highlight-color) 75deg,
+    var(--metal-highlight-color) 105deg,
+    var(--metal-darkgray-color) 130deg,
+    var(--metal-darkgray-color) 180deg,
+    var(--metal-lightgray-color) 195deg,
+    var(--metal-darkgray-color) 210deg,
+    var(--metal-darkgray-color) 230deg,
+    var(--metal-highlight-color) 255deg,
+    var(--metal-highlight-color) 285deg,
+    var(--metal-darkgray-color) 315deg,
+    var(--metal-darkgray-color) 360deg
+  );
+
+  /* sizes */
+  --dial-base-size: 100;
+  --dial-handle-size: 60;
+  --dial-handlecap-size: 50;
+  --dial-indicator-scale: 0.7;
+
+  --port-base-size: 50;
+  --port-rise-size: 40;
+  --port-hole-size: 30;
+  --port-pin-size: 5;
+}

@@ -1,0 +1,50 @@
+.dial {
+  width: calc(var(--dial-base-size) * 1px);
+  height: calc(var(--dial-base-size) * 1px);
+  border-radius: 50%;
+}
+.dial .base {
+  position: absolute;
+  width: calc(var(--dial-base-size) * 1px);
+  height: calc(var(--dial-base-size) * 1px);
+  border-radius: 50%;
+  background: var(--metal-gradient-1);
+}
+.dial .handle {
+  position: absolute;
+  left: calc((var(--dial-base-size) - var(--dial-handle-size)) / var(--dial-base-size) * 50%);
+  top: calc((var(--dial-base-size) - var(--dial-handle-size)) / var(--dial-base-size) * 50%);
+  width: calc(var(--dial-handle-size) * 1px);
+  height: calc(var(--dial-handle-size) * 1px);
+  border-radius: 50%;
+  background: var(--plastic-color);
+}
+.dial .handlecap {
+  position: absolute;
+  left: calc((var(--dial-handle-size) - var(--dial-handlecap-size)) / var(--dial-handle-size) * 50%);
+  top: calc((var(--dial-handle-size) - var(--dial-handlecap-size)) / var(--dial-handle-size) * 50%);
+  width: calc(var(--dial-handlecap-size) * 1px);
+  height: calc(var(--dial-handlecap-size) * 1px);
+  border-radius: 50%;
+  background: var(--metal-gradient-2);
+}
+.dial .indicator {
+  position: absolute;
+  left: calc(50% - 5px);
+  bottom: calc(50% - ((var(--dial-base-size) - var(--dial-handle-size)) / 4 * var(--dial-indicator-scale) * 1px));
+  width: 10px;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  height: calc((var(--dial-base-size) - var(--dial-handle-size)) / 2 * var(--dial-indicator-scale) * 1px);
+  background: var(--plastic-color);
+  /* off-center rotation by the current value in degrees */
+  /* the indicator is translated so the bottom lines up with the handle edge */
+  /* add 1px to fudge the base of the triangle */
+  transform:
+    rotate(calc(var(--value) * 1deg))
+    translateY(calc(
+      (var(--dial-handle-size) * -0.5px) -
+      ((var(--dial-base-size) - var(--dial-handle-size)) / 4 * var(--dial-indicator-scale) * 1px) +
+      1px
+    ));
+}
+

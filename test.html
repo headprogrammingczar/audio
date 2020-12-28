@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="css/widgets.css"></link>
+<script src="external/dsp.js"></script>
+<script src="controls.js"></script>
+<style>
+body {
+  background: black;
+}
+</style>
+</head>
+<body>
+<div>
+  <button id="toggle" onclick="toggle();">Play</button><br>
+  <div id="freq" class="dial" style="padding: 20px; display: inline-block"></div>
+  <div id="distort" class="dial" style="padding: 20px; display: inline-block"></div>
+</div>
+<div>
+  <canvas id="distortionvisualiser" width="640" height="100"></canvas>
+</div>
+<div>
+  <canvas id="oscvisualiser" width="640" height="100"></canvas>
+</div>
+<div>
+  <canvas id="lfogainvisualiser" width="640" height="100"></canvas>
+</div>
+<div>
+  <canvas id="lfovisualiser" width="640" height="100"></canvas>
+</div>
+<div>
+  <canvas id="wavevis" width="640" height="100"></canvas>
+</div>
+<div>
+  <canvas id="distortvis" width="640" height="100"></canvas>
+</div>
+<script src="test.js"></script>
+</body>
+</html>

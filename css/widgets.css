@@ -1,0 +1,16 @@
+:root {
+  --dial-base-size: 100;
+  --port-base-size: 50;
+}
+.dial {
+  position: relative;
+  width: calc(var(--dial-base-size) * 1px);
+  height: calc(var(--dial-base-size) * 1px);
+  border-radius: 50%;
+}
+#port {
+  position: relative;
+  width: calc(var(--port-base-size) * 1px);
+  height: calc(var(--port-base-size) * 1px);
+  border-radius: 50%;
+}
