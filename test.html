@@ -9,13 +9,17 @@
 body {
   background: black;
 }
+.dial {
+  padding: 20px;
+  display: inline-block;
+}
 </style>
 </head>
 <body>
 <div>
   <button id="toggle" onclick="toggle();">Play</button><br>
-  <div id="freq" class="dial" style="padding: 20px; display: inline-block"></div>
-  <div id="distort" class="dial" style="padding: 20px; display: inline-block"></div>
+  <x-dial id="freq" class="dial" data-angle="0" data-getvalue="return (this.angle / 360 * 1000) + 200" onchange="slide(this.value)"></x-dial>
+  <x-dial id="distort" class="dial" data-angle="30" data-snaps="[30, 60, 90, 120, 150]" data-getvalue="return (this.angle - 30) / 10" onchange="distort(this.value)"></x-dial>
 </div>
 <div>
   <canvas id="distortionvisualiser" width="640" height="100"></canvas>

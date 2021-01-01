@@ -74,7 +74,7 @@ class HTMLAngleControl extends HTMLElement {
     this.snapAngles = defAttribute(this, 'data-snaps', [], s => JSON.parse(s));
     this.valueFunction = defAttribute(this, 'data-getvalue', () => this.angle, s => new Function(s));
 
-    if (this.snapAngles != []) {
+    if (this.snapAngles.length > 0) {
       this.isSnappy = true;
     }
 

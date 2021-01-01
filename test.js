@@ -1,14 +1,8 @@
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 var audioContext = new AudioContext();
 var distortionanalyser = audioContext.createAnalyser();
-var freqdial = new AngleControl(0, document.querySelector('#freq'), false, [], angle => (angle / 360 * 1000) + 200);
-freqdial.onchange = function() {
-  slide(this.value);
-};
-var distortdial = new AngleControl(30, document.querySelector('#distort'), true, [30, 60, 90, 120, 150], angle => (angle - 30) / 10);
-distortdial.onchange = function() {
-  distort(this.value);
-};
+var freqdial = document.querySelector('#freq');
+var distortdial = document.querySelector('#distort');
 var oscanalyser = audioContext.createAnalyser();
 var lfoanalyser = audioContext.createAnalyser();
 var lfogainanalyser = audioContext.createAnalyser();
@@ -84,7 +78,7 @@ function play() {
   lfoGain.gain.value = 450;
 
   distortion = audioContext.createWaveShaper();
-  distortion.curve = makeDistortionCurve(parseInt(distortdial.value, 10));
+  distortion.curve = makeDistortionCurve(distortdial.value);
   distortion.oversample = '4x';
 
   osc.connect(distortion);
@@ -204,7 +198,6 @@ function draw(n, analyser, canvasSelector) {
 
   drawrec(n, analyser, canvasCtx, dataArray);
 }
-
 
 function stop() {
   osc.disconnect();
