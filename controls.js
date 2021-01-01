@@ -1,6 +1,6 @@
 // functions that make the ui behave nicely
 
-// when interacting with an AngleControl, translate click location to an angle
+// when interacting with an HTMLAngleControl, translate click location to an angle
 function getAngle(element, e) {
   // get position of click relative to top-left corner of element
   // need to do this in screen-space to account for nested elements
@@ -50,84 +50,95 @@ function snapAngle(angle, snapAngles) {
   return snapAngles[index];
 }
 
-// a ui element that is interacted with by rotating around its center
-function AngleControl(angle, domElement, isSnappy, snapAngles, valueFunction) {
-  this.isSnappy = isSnappy;
-  this.snapAngles = snapAngles;
-  this.valueFunction = valueFunction;
-
-  // the position of the element in the ui
-  this.angle = angle;
-
-  // the value represented by the current position in the ui
-  this.value = null;
-
-  // this ui element in the dom
-  this.domElement = domElement;
-
-  // set the inside of the ui element
-  // include css, add a base div, then place the dial html inside the div
-  this.shadowElement = domElement.attachShadow({mode: 'closed'});
-  var commonstyle = document.createElement('link');
-  commonstyle.setAttribute('rel', 'stylesheet');
-  commonstyle.setAttribute('href', 'css/shadow-common.css');
-  var dialstyle = document.createElement('link');
-  dialstyle.setAttribute('rel', 'stylesheet');
-  dialstyle.setAttribute('href', 'css/shadow-dial.css');
-  this.shadowDiv = document.createElement('div');
-  this.shadowDiv.setAttribute('class', 'base');
-  this.shadowElement.appendChild(commonstyle);
-  this.shadowElement.appendChild(dialstyle);
-  this.shadowElement.appendChild(this.shadowDiv);
-  this.shadowDiv.innerHTML = '<div class="dial"><div class="base"><div class="handle"><div class="handlecap"><div class="indicator"></div></div></div></div></div>';
-
-  // helper state
-  this.isMouseDown = false;
-
-  // handler for real value change events
-  this.onchange = () => {};
-
-  // handle mouse events, ensuring that "this" is this object
-  domElement.onmousedown = e => this.handleOnMouseDown(e);
-  domElement.onmousemove = e => this.handleOnMouseMove(e);
-  domElement.onmouseup = e => this.handleOnMouseUp(e);
-  domElement.onmouseleave = e => this.handleOnMouseLeave(e);
-
-  // things that require a mostly-valid object
-  this.setAngle(this.angle);
+function defAttribute(elem, attribute, defaultValue, f = s => s) {
+  return elem.hasAttribute(attribute) ? f(elem.getAttribute(attribute)) : defaultValue;
 }
 
-AngleControl.prototype.handleOnMouseDown = function(e) {
-  angle = getAngle(this.domElement, e);
+// TODO
+// figure out the valueFunction parameter
+// attach event handling to the shadow .dial div
+class HTMLAngleControl extends HTMLElement {
+  angle;
+  snapAngles;
+  valueFunction = () => this.angle;
+  value;
+  shadow;
+  shadowDiv;
+  isSnappy = false;
+  isMouseDown = false;
+
+  constructor() {
+    super();
+  }
+
+  connectedCallback() {
+    // html attributes
+    this.angle = defAttribute(this, 'data-angle', 0, s => parseInt(s, 10));
+    this.snapAngles = defAttribute(this, 'data-snaps', [], s => JSON.parse(s));
+    this.valueFunction = defAttribute(this, 'data-getvalue', () => this.angle, s => new Function(s));
+
+    if (this.snapAngles != []) {
+      this.isSnappy = true;
+    }
+
+    // set the inside of the ui element
+    // include css, add a base div, then place the dial html inside the div
+    this.shadow = this.attachShadow({mode: 'closed'});
+    var dialstyle = document.createElement('link');
+    dialstyle.setAttribute('rel', 'stylesheet');
+    dialstyle.setAttribute('href', 'css/shadow-dial.css');
+    this.shadowDiv = document.createElement('div');
+    this.shadowDiv.setAttribute('class', 'base');
+    this.shadow.appendChild(dialstyle);
+    this.shadow.appendChild(this.shadowDiv);
+    this.shadowDiv.innerHTML = '<div class="handle"><div class="handlecap"><div class="indicator"></div></div></div>';
+
+    // default event handling
+    this.onmousedown = e => this.handleOnMouseDown(e);
+    this.onmousemove = e => this.handleOnMouseMove(e);
+    this.onmouseup = e => this.handleOnMouseUp(e);
+    this.onmouseleave = e => this.handleOnMouseLeave(e);
+
+    // finish setting up state dependent on the initial value
+    this.setAngle(this.angle, false);
+  }
+}
+
+HTMLAngleControl.prototype.handleOnMouseDown = function(e) {
+  angle = getAngle(this, e);
   this.setAngle(angle);
   this.isMouseDown = true;
 };
 
-AngleControl.prototype.handleOnMouseMove = function(e) {
+HTMLAngleControl.prototype.handleOnMouseMove = function(e) {
   if (this.isMouseDown) {
-    angle = getAngle(this.domElement, e);
+    angle = getAngle(this, e);
     this.setAngle(angle);
   }
 };
 
-AngleControl.prototype.handleOnMouseUp = function(e) {
+HTMLAngleControl.prototype.handleOnMouseUp = function(e) {
   this.isMouseDown = false;
 };
 
-AngleControl.prototype.handleOnMouseLeave = function(e) {
+HTMLAngleControl.prototype.handleOnMouseLeave = function(e) {
   this.isMouseDown = false;
 };
 
-AngleControl.prototype.setAngle = function(angle) {
+HTMLAngleControl.prototype.setAngle = function(angle, doEvent=true) {
   if (this.isSnappy) {
     angle = snapAngle(angle, this.snapAngles);
   }
   this.shadowDiv.style.setProperty('--value', angle);
   this.angle = angle;
-  var newvalue = this.valueFunction(angle);
+  var newvalue = this.valueFunction();
   if (newvalue != this.value) {
     this.value = newvalue;
-    this.onchange();
+    if (doEvent) {
+      var changeEvent = new Event("change");
+      this.dispatchEvent(changeEvent);
+    }
   }
 };
 
+customElements.define('x-dial', HTMLAngleControl);

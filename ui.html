@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<link rel="stylesheet" href="ui.css"></link>
+<link rel="stylesheet" href="ui.css">
 <script src="controls.js"></script>
 <script src="audio.js"></script>
 </head>
@@ -10,7 +10,7 @@
 <table id="mockup">
   <tr>
     <td>
-      <div id="dial" class="dial"></div>
+      <x-dial id="dial" data-angle="30" data-snaps="[30, 60, 90, 120, 150]" data-getvalue="return this.angle / 30" onchange="console.log(this.value);"></x-dial>
     </td>
     <td>
       <div id="port">
@@ -74,9 +74,5 @@
     </td>
   </tr>
 </table>
-<script>
-dial = new AngleControl(30, document.querySelector('#dial'), true, [30, 60, 90, 120, 150], angle => (angle - 30) / 30);
-</script>
 </body>
-</head>
 </html>
