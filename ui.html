@@ -17,7 +17,26 @@
       <x-jack id="jack"></x-jack>
     </td>
     <td>
-      <div id="key1" class="keystyle1" data-on="false" onclick="this.setAttribute('data-on', this.getAttribute('data-on') == 'true' ? 'false' : 'true')">
+      <script>
+        var now=0;
+        function step() {
+          now++;
+          if (now > 8) {
+            now = 1;
+          }
+          key1.setAttribute('data-now', now == 1);
+          key2.setAttribute('data-now', now == 2);
+          key3.setAttribute('data-now', now == 3);
+          key4.setAttribute('data-now', now == 4);
+          key5.setAttribute('data-now', now == 5);
+          key6.setAttribute('data-now', now == 6);
+          key7.setAttribute('data-now', now == 7);
+          key8.setAttribute('data-now', now == 8);
+          setTimeout(step, 500);
+        }
+        setTimeout(step, 1000);
+      </script>
+      <div id="key1" class="keystyle2" data-pressed="false" data-now="false" onclick="this.setAttribute('data-pressed', this.getAttribute('data-pressed') == 'true' ? 'false' : 'true')">
         <div class="base">
           <div class="outline">
             <div class="label">
@@ -28,7 +47,7 @@
           </div>
         </div>
       </div>
-      <div id="key2" class="keystyle2" data-on="false" onmousedown="this.setAttribute('data-on', this.getAttribute('data-on') == 'true' ? 'false' : 'true')">
+      <div id="key2" class="keystyle2" data-pressed="false" data-now="false" onclick="this.setAttribute('data-pressed', this.getAttribute('data-pressed') == 'true' ? 'false' : 'true')">
         <div class="base">
           <div class="outline">
             <div class="label">
@@ -39,11 +58,66 @@
           </div>
         </div>
       </div>
-      <div id="key3" class="keystyle3" data-on="false" onclick="this.setAttribute('data-on', this.getAttribute('data-on') == 'true' ? 'false' : 'true')">
+      <div id="key3" class="keystyle2" data-pressed="false" data-now="false" onclick="this.setAttribute('data-pressed', this.getAttribute('data-pressed') == 'true' ? 'false' : 'true')">
+        <div class="base">
+          <div class="outline">
+            <div class="label">
+              3
+            </div>
+            <div class="bump">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="key4" class="keystyle2" data-pressed="false" data-now="false" onclick="this.setAttribute('data-pressed', this.getAttribute('data-pressed') == 'true' ? 'false' : 'true')">
         <div class="base">
           <div class="outline">
             <div class="label">
               4
+            </div>
+            <div class="bump">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="key5" class="keystyle2" data-pressed="false" data-now="false" onclick="this.setAttribute('data-pressed', this.getAttribute('data-pressed') == 'true' ? 'false' : 'true')">
+        <div class="base">
+          <div class="outline">
+            <div class="label">
+              5
+            </div>
+            <div class="bump">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="key6" class="keystyle2" data-pressed="false" data-now="false" onclick="this.setAttribute('data-pressed', this.getAttribute('data-pressed') == 'true' ? 'false' : 'true')">
+        <div class="base">
+          <div class="outline">
+            <div class="label">
+              6
+            </div>
+            <div class="bump">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="key7" class="keystyle2" data-pressed="false" data-now="false" onclick="this.setAttribute('data-pressed', this.getAttribute('data-pressed') == 'true' ? 'false' : 'true')">
+        <div class="base">
+          <div class="outline">
+            <div class="label">
+              7
+            </div>
+            <div class="bump">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="key8" class="keystyle2" data-pressed="false" data-now="false" onclick="this.setAttribute('data-pressed', this.getAttribute('data-pressed') == 'true' ? 'false' : 'true')">
+        <div class="base">
+          <div class="outline">
+            <div class="label">
+              8
             </div>
             <div class="bump">
             </div>
