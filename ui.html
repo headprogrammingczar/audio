@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <link rel="stylesheet" href="ui.css">
+<link rel="stylesheet" href="mockup.css">
 <script src="controls.js"></script>
 <script src="audio.js"></script>
 </head>
@@ -16,7 +17,50 @@
       <x-jack id="jack"></x-jack>
     </td>
     <td>
-      <div id="switch" style="--value: 0">
+      <div id="key1" class="keystyle1" data-on="false" onclick="this.setAttribute('data-on', this.getAttribute('data-on') == 'true' ? 'false' : 'true')">
+        <div class="base">
+          <div class="outline">
+            <div class="label">
+              1
+            </div>
+            <div class="bump">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="key2" class="keystyle2" data-on="false" onmousedown="this.setAttribute('data-on', this.getAttribute('data-on') == 'true' ? 'false' : 'true')">
+        <div class="base">
+          <div class="outline">
+            <div class="label">
+              2
+            </div>
+            <div class="bump">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="key3" class="keystyle3" data-on="false" onclick="this.setAttribute('data-on', this.getAttribute('data-on') == 'true' ? 'false' : 'true')">
+        <div class="base">
+          <div class="outline">
+            <div class="label">
+              4
+            </div>
+            <div class="bump">
+            </div>
+          </div>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div id="nixie">
+      </div>
+    </td>
+    <td>
+      <div id="voltmeter">
+      </div>
+    </td>
+    <td>
+      <div id="speaker">
       </div>
     </td>
     <td>
@@ -24,11 +68,11 @@
       </div>
     </td>
     <td>
-      <div id="button">
+      <div id="switch">
       </div>
     </td>
     <td>
-      <div id="key">
+      <div id="button">
       </div>
     </td>
     <td>
@@ -41,18 +85,6 @@
     </td>
     <td>
       <div id="slider">
-      </div>
-    </td>
-    <td>
-      <div id="speaker">
-      </div>
-    </td>
-    <td>
-      <div id="nixie">
-      </div>
-    </td>
-    <td>
-      <div id="voltmeter">
       </div>
     </td>
     <td>
