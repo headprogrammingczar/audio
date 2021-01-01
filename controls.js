@@ -54,9 +54,6 @@ function defAttribute(elem, attribute, defaultValue, f = s => s) {
   return elem.hasAttribute(attribute) ? f(elem.getAttribute(attribute)) : defaultValue;
 }
 
-// TODO
-// figure out the valueFunction parameter
-// attach event handling to the shadow .dial div
 class HTMLAngleControl extends HTMLElement {
   angle;
   snapAngles;
@@ -82,16 +79,16 @@ class HTMLAngleControl extends HTMLElement {
     }
 
     // set the inside of the ui element
-    // include css, add a base div, then place the dial html inside the div
+    // include css, add a base div, then place the html inside the div
     this.shadow = this.attachShadow({mode: 'closed'});
     var dialstyle = document.createElement('link');
     dialstyle.setAttribute('rel', 'stylesheet');
     dialstyle.setAttribute('href', 'css/shadow-dial.css');
     this.shadowDiv = document.createElement('div');
-    this.shadowDiv.setAttribute('class', 'base');
+    this.shadowDiv.setAttribute('class', 'outerdiv');
     this.shadow.appendChild(dialstyle);
     this.shadow.appendChild(this.shadowDiv);
-    this.shadowDiv.innerHTML = '<div class="handle"><div class="handlecap"><div class="indicator"></div></div></div>';
+    this.shadowDiv.innerHTML = '<div class="base"><div class="handle"><div class="handlecap"><div class="indicator"></div></div></div></div>';
 
     // default event handling
     this.onmousedown = e => this.handleOnMouseDown(e);
@@ -142,3 +139,25 @@ HTMLAngleControl.prototype.setAngle = function(angle, doEvent=true) {
 };
 
 customElements.define('x-dial', HTMLAngleControl);
+
+class HTMLJack extends HTMLElement {
+  constructor() {
+    super();
+  }
+
+  connectedCallback() {
+    // set the inside of the ui element
+    // include css, add a base div, then place the html inside the div
+    this.shadow = this.attachShadow({mode: 'closed'});
+    var jackstyle = document.createElement('link');
+    jackstyle.setAttribute('rel', 'stylesheet');
+    jackstyle.setAttribute('href', 'css/shadow-jack.css');
+    this.shadowDiv = document.createElement('div');
+    this.shadowDiv.setAttribute('class', 'outerdiv');
+    this.shadow.appendChild(jackstyle);
+    this.shadow.appendChild(this.shadowDiv);
+    this.shadowDiv.innerHTML = '<div class="base"><div class="rise"><div class="hole"><div class="pin"></div></div></div></div>';
+  }
+}
+
+customElements.define('x-jack', HTMLJack);

@@ -1,11 +1,11 @@
-.base {
+:host {
   /* colors */
   --plastic-color: rgba(30, 30, 30, 1);
   --metal-base-color: rgba(230, 232, 235, 1);
   --metal-lightgray-color: rgba(200, 200, 200, 1);
   --metal-darkgray-color: rgba(150, 150, 150, 1);
   --metal-highlight-color: rgba(255, 255, 240, 1);
-  --metal-gold: rgba(240, 200, 40, 1);
+  --metal-gold-color: rgba(240, 200, 40, 1);
 
   /* a good looking metal gradient for large elements */
   --metal-gradient-1: conic-gradient(
@@ -48,13 +48,47 @@
   );
 
   /* sizes */
-  --dial-base-size: 100;
-  --dial-handle-size: 60;
-  --dial-handlecap-size: 50;
-  --dial-indicator-scale: 0.7;
+  --jack-base-size: 50;
+  --jack-rise-size: 40;
+  --jack-hole-size: 30;
+  --jack-pin-size: 5;
 
-  --port-base-size: 50;
-  --port-rise-size: 40;
-  --port-hole-size: 30;
-  --port-pin-size: 5;
+  /* overrideable style of the root element */
+  display: block;
+  border-radius: 50%;
+}
+
+.base {
+  position: relative;
+  width: calc(var(--jack-base-size) * 1px);
+  height: calc(var(--jack-base-size) * 1px);
+  border-radius: 50%;
+  background: var(--metal-gradient-1);
+}
+.rise {
+  position: absolute;
+  left: calc((var(--jack-base-size) - var(--jack-rise-size)) / var(--jack-base-size) * 50%);
+  top: calc((var(--jack-base-size) - var(--jack-rise-size)) / var(--jack-base-size) * 50%);
+  width: calc(var(--jack-rise-size) * 1px);
+  height: calc(var(--jack-rise-size) * 1px);
+  border-radius: 50%;
+  background: var(--metal-lightgray-color);
+}
+.hole {
+  position: absolute;
+  left: calc((var(--jack-rise-size) - var(--jack-hole-size)) / var(--jack-rise-size) * 50%);
+  top: calc((var(--jack-rise-size) - var(--jack-hole-size)) / var(--jack-rise-size) * 50%);
+  width: calc(var(--jack-hole-size) * 1px);
+  height: calc(var(--jack-hole-size) * 1px);
+  border-radius: 50%;
+  background: var(--plastic-color);
+}
+.pin {
+  position: absolute;
+  left: calc((var(--jack-hole-size) - var(--jack-pin-size)) / var(--jack-hole-size) * 50%);
+  top: calc((var(--jack-hole-size) - var(--jack-pin-size)) / var(--jack-hole-size) * 50%);
+  width: calc(var(--jack-pin-size) * 1px);
+  height: calc(var(--jack-pin-size) * 1px);
+  border-radius: 50%;
+  background: var(--metal-gold-color);
 }

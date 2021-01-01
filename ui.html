@@ -13,16 +13,7 @@
       <x-dial id="dial" data-angle="30" data-snaps="[30, 60, 90, 120, 150]" data-getvalue="return this.angle / 30" onchange="console.log(this.value);"></x-dial>
     </td>
     <td>
-      <div id="port">
-        <div class="base">
-          <div class="rise">
-            <div class="hole">
-              <div class="pin">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <x-jack id="jack"></x-jack>
     </td>
     <td>
       <div id="switch" style="--value: 0">
