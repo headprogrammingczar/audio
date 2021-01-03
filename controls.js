@@ -55,7 +55,7 @@ function defAttribute(elem, attribute, defaultValue, f = s => s) {
 }
 
 class HTMLAngleControl extends HTMLElement {
-  angle;
+  _angle;
   snapAngles;
   valueFunction = () => this.angle;
   value;
@@ -70,7 +70,7 @@ class HTMLAngleControl extends HTMLElement {
 
   connectedCallback() {
     // html attributes
-    this.angle = defAttribute(this, 'data-angle', 0, s => parseInt(s, 10));
+    this._angle = defAttribute(this, 'data-angle', 0, s => parseInt(s, 10));
     this.snapAngles = defAttribute(this, 'data-snaps', [], s => JSON.parse(s));
     this.valueFunction = defAttribute(this, 'data-getvalue', () => this.angle, s => new Function(s));
 
@@ -99,48 +99,57 @@ class HTMLAngleControl extends HTMLElement {
     // finish setting up state dependent on the initial value
     this.setAngle(this.angle, false);
   }
-}
 
-HTMLAngleControl.prototype.handleOnMouseDown = function(e) {
-  angle = getAngle(this, e);
-  this.setAngle(angle);
-  this.isMouseDown = true;
-};
-
-HTMLAngleControl.prototype.handleOnMouseMove = function(e) {
-  if (this.isMouseDown) {
-    angle = getAngle(this, e);
-    this.setAngle(angle);
+  handleOnMouseDown(e) {
+    this.angle = getAngle(this, e);
+    this.isMouseDown = true;
   }
-};
 
-HTMLAngleControl.prototype.handleOnMouseUp = function(e) {
-  this.isMouseDown = false;
-};
-
-HTMLAngleControl.prototype.handleOnMouseLeave = function(e) {
-  this.isMouseDown = false;
-};
-
-HTMLAngleControl.prototype.setAngle = function(angle, doEvent=true) {
-  if (this.isSnappy) {
-    angle = snapAngle(angle, this.snapAngles);
-  }
-  this.shadowDiv.style.setProperty('--value', angle);
-  this.angle = angle;
-  var newvalue = this.valueFunction();
-  if (newvalue != this.value) {
-    this.value = newvalue;
-    if (doEvent) {
-      var changeEvent = new Event("change");
-      this.dispatchEvent(changeEvent);
+  handleOnMouseMove(e) {
+    if (this.isMouseDown) {
+      this.angle = getAngle(this, e);
     }
   }
-};
+
+  handleOnMouseUp(e) {
+    this.isMouseDown = false;
+  }
+
+  handleOnMouseLeave(e) {
+    this.isMouseDown = false;
+  }
+
+  setAngle(angle, doEvent=true) {
+    if (this.isSnappy) {
+      angle = snapAngle(angle, this.snapAngles);
+    }
+    this.shadowDiv.style.setProperty('--value', angle);
+    this._angle = angle;
+    var newvalue = this.valueFunction();
+    if (newvalue != this.value) {
+      this.value = newvalue;
+      if (doEvent) {
+        var changeEvent = new Event("change");
+        this.dispatchEvent(changeEvent);
+      }
+    }
+  }
+
+  set angle(newangle) {
+    this.setAngle(newangle);
+  }
+
+  get angle() {
+    return this._angle;
+  }
+}
 
 customElements.define('x-dial', HTMLAngleControl);
 
 class HTMLJack extends HTMLElement {
+  shadow;
+  shadowDiv;
+
   constructor() {
     super();
   }
@@ -161,3 +170,46 @@ class HTMLJack extends HTMLElement {
 }
 
 customElements.define('x-jack', HTMLJack);
+
+// TODO key element construction
+// TODO key element api
+// TODO replace mockup
+// TODO finalize key element styling
+class HTMLKey extends HTMLElement {
+  pressed;
+  now;
+  shadow;
+  shadowDiv;
+
+  constructor() {
+    super();
+  }
+
+  connectedCallback() {
+    this.pressed = defAttribute(this, 'data-pressed', false, s => true);
+    this.now = defAttribute(this, 'data-pressed', false, s => true);
+
+    this.shadow = this.attachShadow({mode: 'closed'});
+    var keystyle = document.createElement('link');
+    keystyle.setAttribute('rel', 'stylesheet');
+    keystyle.setAttribute('href', 'css/shadow-key.css');
+    this.shadowDiv = document.createElement('div');
+    this.shadowDiv.setAttribute('class', 'outerdiv');
+    this.shadow.appendChild(keystyle);
+    this.shadow.appendChild(this.shadowDiv);
+    this.shadowDiv.innerHTML = '<div class="base"><div class="outline"><div class="label" part="label"></div><div class="bump"></div></div></div>';
+    while(this.firstChild) {
+      this.shadowDiv.querySelector('.label').appendChild(this.firstChild);
+    }
+  }
+
+  set text(newtext) {
+    this.shadowDiv.querySelector('.label').innerHTML = newtext;
+  }
+
+  get text() {
+    return this.shadowDiv.querySelector('.label').innerHTML;
+  }
+}
+
+customElements.define('x-key', HTMLKey);

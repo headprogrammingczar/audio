@@ -1,7 +1,9 @@
+html {
+  background: black;
+}
 #mockup {
   border-collapse: collapse;
 }
 #mockup td {
-  background: black;
   padding: 30px;
 }

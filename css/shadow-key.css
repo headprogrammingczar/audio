@@ -1,28 +1,32 @@
-/*
-sequencer keys can be pressed down
-sequencer keys can also be the current time in the running sequence
-*/
+:host {
+  --bump-color: black;
+  --bump-checked-color: red;
+  --middle-background-color: rgba(200, 208, 215, 1);
+  --middle-checked-background-color: rgba(255, 240, 240, 1);
+  --outer-background-color: rgba(110, 108, 105, 1);
+  --outer-now-background-color: rgba(200, 200, 250, 1);
+  --outer-checked-now-background-color: rgba(255, 128, 128, 1);
 
-.keystyle2 {
-  display: inline-block;
-  margin: 10px;
+  /* overrideable style of the root element */
+  display: block;
+  border-radius: 10% 10% 25% 25%;
 }
 
 /* center lights up white */
-.keystyle2 .base {
+:host .base {
   position: relative;
   width: 60px;
   height: 60px;
   background: rgba(110, 108, 105, 1);
   border-radius: 10% 10% 25% 25%;
 }
-.keystyle2[data-pressed = true][data-now = true] .base {
+:host[data-pressed][data-now] .base {
   background: rgba(255, 128, 128, 1);
 }
-.keystyle2[data-pressed = false][data-now = true] .base {
+:host[data-now] .base {
   background: rgba(200, 200, 230, 1);
 }
-.keystyle2 .outline {
+:host .outline {
   position: absolute;
   background: rgba(200, 208, 215, 1);
   border-radius: 10% 10% 25% 25%;
@@ -32,10 +36,10 @@ sequencer keys can also be the current time in the running sequence
   left: 8px;
   right: 8px;
 }
-.keystyle2[data-pressed = true] .outline {
+:host[data-pressed] .outline {
   background: rgba(255, 240, 240, 1);
 }
-.keystyle2 .bump {
+:host .bump {
   position: absolute;
   top: 80%;
   bottom: calc(20% - 2px);
@@ -43,19 +47,19 @@ sequencer keys can also be the current time in the running sequence
   right: calc(1/3 * 100%);
   background: black;
 }
-.keystyle2[data-pressed = true] .bump {
+:host[data-pressed] .bump {
   background: red;
   box-shadow: 0 0 2px 0 red;
 }
-.keystyle2 .label {
+:host .label {
   position: absolute;
-  text-align: center;
   left: 0;
   right: 0;
   top: 0;
   bottom: 20%;
-  line-height: 0;
   transform: translate(0%, 50%);
+  text-align: center;
+  line-height: 0;
   font-size: 16pt;
   font-family: sans-serif;
   user-select: none;
