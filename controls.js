@@ -176,18 +176,22 @@ customElements.define('x-jack', HTMLJack);
 // TODO replace mockup
 // TODO finalize key element styling
 class HTMLKey extends HTMLElement {
-  pressed;
-  now;
+  _pressed;
+  _now;
   shadow;
   shadowDiv;
+  onnow;
+  onpressed;
 
   constructor() {
     super();
   }
 
   connectedCallback() {
-    this.pressed = defAttribute(this, 'data-pressed', false, s => true);
-    this.now = defAttribute(this, 'data-pressed', false, s => true);
+    this._pressed = defAttribute(this, 'data-pressed', false, s => true);
+    this._now = defAttribute(this, 'data-pressed', false, s => true);
+    this.onnow = defAttribute(this, 'data-onnow', () => {}, s => new Function(s));
+    this.onpressed = defAttribute(this, 'data-onpressed', () => {}, s => new Function(s));
 
     this.shadow = this.attachShadow({mode: 'closed'});
     var keystyle = document.createElement('link');
@@ -201,6 +205,8 @@ class HTMLKey extends HTMLElement {
     while(this.firstChild) {
       this.shadowDiv.querySelector('.label').appendChild(this.firstChild);
     }
+
+    this.setdom();
   }
 
   set text(newtext) {
@@ -209,6 +215,40 @@ class HTMLKey extends HTMLElement {
 
   get text() {
     return this.shadowDiv.querySelector('.label').innerHTML;
+  }
+
+  set now(newnow) {
+    var oldnow = this._now;
+    if (newnow != oldnow) {
+      this._now = newnow;
+      this.setdom();
+      this.onnow();
+    }
+  }
+
+  get now() {
+    return this._now;
+  }
+
+  set pressed(newpressed) {
+    var oldpressed = this._pressed;
+    if (newpressed != oldpressed) {
+      this._pressed = newpressed;
+      this.setdom();
+      this.onpressed();
+    }
+  }
+
+  get pressed() {
+    return this._pressed;
+  }
+
+  setdom() {
+    this.shadowDiv.setAttribute('data-now', this._now);
+    this.shadowDiv.setAttribute('data-pressed', this._pressed);
+  }
+
+  handleOnClick(e) {
   }
 }
 
