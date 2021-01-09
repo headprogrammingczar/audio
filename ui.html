@@ -10,13 +10,14 @@
 <body>
 <table id="mockup">
   <tr>
-    <td>
+    <td id="dials">
       <x-dial id="dial" data-angle="30" data-snaps="[30, 60, 90, 120, 150]" data-getvalue="return this.angle / 30" onchange="console.log(this.value);"></x-dial>
     </td>
-    <td>
-      <x-jack id="jack"></x-jack>
+    <td id="jacks">
+      <x-jack id="jack1"></x-jack>
+      <x-jack id="jack2"></x-jack>
     </td>
-    <td>
+    <td id="keys">
       <script>
         var now=0;
         function step() {
@@ -24,32 +25,32 @@
           if (now > 8) {
             now = 1;
           }
-          key1.setAttribute('data-now', now == 1);
-          key2.setAttribute('data-now', now == 2);
-          key3.setAttribute('data-now', now == 3);
-          key4.setAttribute('data-now', now == 4);
-          key5.setAttribute('data-now', now == 5);
-          key6.setAttribute('data-now', now == 6);
-          key7.setAttribute('data-now', now == 7);
-          key8.setAttribute('data-now', now == 8);
+          key1.now = now == 1;
+          key2.now = now == 2;
+          key3.now = now == 3;
+          key4.now = now == 4;
+          key5.now = now == 5;
+          key6.now = now == 6;
+          key7.now = now == 7;
+          key8.now = now == 8;
           setTimeout(step, 500);
         }
-        //setTimeout(step, 1000);
+        setTimeout(step, 1000);
       </script>
       <style>
-        #key1::part(label) {
-          color: red;
+        x-key:nth-child(even)::part(label) {
+          color: gray;
           font-size: 12pt;
         }
       </style>
-      <x-key id="key1" data-pressed data-now>1</x-key>
-      <x-key id="key2">2</x-key>
-      <x-key id="key3">3</x-key>
-      <x-key id="key4">4</x-key>
-      <x-key id="key5">5</x-key>
-      <x-key id="key6">6</x-key>
-      <x-key id="key7">7</x-key>
-      <x-key id="key8">8</x-key>
+      <x-key id="key1" data-pressed data-now>♪</x-key>
+      <x-key id="key2">♪</x-key>
+      <x-key id="key3">♪</x-key>
+      <x-key id="key4">♪</x-key>
+      <x-key id="key5">♪</x-key>
+      <x-key id="key6">♪</x-key>
+      <x-key id="key7">♪</x-key>
+      <x-key id="key8">♪</x-key>
     </td>
     <td>
       <div id="nixie">
@@ -68,23 +69,7 @@
       </div>
     </td>
     <td>
-      <div id="switch">
-      </div>
-    </td>
-    <td>
-      <div id="button">
-      </div>
-    </td>
-    <td>
       <div id="waveform">
-      </div>
-    </td>
-    <td>
-      <div id="bars">
-      </div>
-    </td>
-    <td>
-      <div id="slider">
       </div>
     </td>
     <td>
@@ -93,6 +78,22 @@
     </td>
     <td>
       <div id="light">
+      </div>
+    </td>
+    <td>
+      <div id="switch">
+      </div>
+    </td>
+    <td>
+      <div id="button">
+      </div>
+    </td>
+    <td>
+      <div id="bars">
+      </div>
+    </td>
+    <td>
+      <div id="slider">
       </div>
     </td>
   </tr>

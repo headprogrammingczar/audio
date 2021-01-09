@@ -146,6 +146,13 @@ class HTMLAngleControl extends HTMLElement {
 
 customElements.define('x-dial', HTMLAngleControl);
 
+// TODO html initial connected state between two jacks?
+// TODO visuals for connected jacks
+// TODO api for connecting jacks
+// TODO clicky controls to connect two jacks
+// TODO don't use drag and drop, it has bad accessibility
+// TODO clicky controls for disconnecting jacks
+// TODO connection event handlers
 class HTMLJack extends HTMLElement {
   shadow;
   shadowDiv;
@@ -171,10 +178,6 @@ class HTMLJack extends HTMLElement {
 
 customElements.define('x-jack', HTMLJack);
 
-// TODO key element construction
-// TODO key element api
-// TODO replace mockup
-// TODO finalize key element styling
 class HTMLKey extends HTMLElement {
   _pressed;
   _now;
@@ -189,7 +192,7 @@ class HTMLKey extends HTMLElement {
 
   connectedCallback() {
     this._pressed = defAttribute(this, 'data-pressed', false, s => true);
-    this._now = defAttribute(this, 'data-pressed', false, s => true);
+    this._now = defAttribute(this, 'data-now', false, s => true);
     this.onnow = defAttribute(this, 'data-onnow', () => {}, s => new Function(s));
     this.onpressed = defAttribute(this, 'data-onpressed', () => {}, s => new Function(s));
 
@@ -205,6 +208,8 @@ class HTMLKey extends HTMLElement {
     while(this.firstChild) {
       this.shadowDiv.querySelector('.label').appendChild(this.firstChild);
     }
+
+    this.onclick = this.handleOnClick;
 
     this.setdom();
   }
@@ -249,6 +254,7 @@ class HTMLKey extends HTMLElement {
   }
 
   handleOnClick(e) {
+    this.pressed = !this.pressed;
   }
 }
 

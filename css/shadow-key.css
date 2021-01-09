@@ -13,20 +13,23 @@
 }
 
 /* center lights up white */
-:host .base {
+.outerdiv .base {
   position: relative;
   width: 60px;
   height: 60px;
   background: rgba(110, 108, 105, 1);
   border-radius: 10% 10% 25% 25%;
 }
-:host[data-pressed][data-now] .base {
+.outerdiv[data-pressed = true][data-now = true] .base {
   background: rgba(255, 128, 128, 1);
 }
-:host[data-now] .base {
+.outerdiv[data-now = true] .base {
   background: rgba(200, 200, 230, 1);
 }
-:host .outline {
+.outerdiv[data-pressed = true] .base {
+  background: rgba(160, 128, 128, 1);
+}
+.outerdiv .outline {
   position: absolute;
   background: rgba(200, 208, 215, 1);
   border-radius: 10% 10% 25% 25%;
@@ -36,10 +39,10 @@
   left: 8px;
   right: 8px;
 }
-:host[data-pressed] .outline {
+.outerdiv[data-pressed = true] .outline {
   background: rgba(255, 240, 240, 1);
 }
-:host .bump {
+.outerdiv .bump {
   position: absolute;
   top: 80%;
   bottom: calc(20% - 2px);
@@ -47,11 +50,11 @@
   right: calc(1/3 * 100%);
   background: black;
 }
-:host[data-pressed] .bump {
+.outerdiv[data-pressed = true] .bump {
   background: red;
   box-shadow: 0 0 2px 0 red;
 }
-:host .label {
+.outerdiv .label {
   position: absolute;
   left: 0;
   right: 0;
